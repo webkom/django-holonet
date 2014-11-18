@@ -26,6 +26,8 @@ lint:
 
 test:
 	tox
+	@coverage combine
+	coverage report
 
 docs:
 	rm -f docs/django-holonet.rst
