@@ -2,7 +2,9 @@
 django-holonet
 =============================
 
-.. image:: https://ci.frigg.io/badges/webkom/django-holonet/ :target: https://ci.frigg.io/webkom/django-holonet/last/ :alt: Build Status
+.. image:: https://ci.frigg.io/badges/webkom/django-holonet/ 
+   :target: https://ci.frigg.io/webkom/django-holonet/last/ 
+   :alt: Build Status
 
 This package is used to control holonet from a django project.
 
