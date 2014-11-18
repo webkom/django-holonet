@@ -1,5 +1,6 @@
 tasks:
   - tox
+  - coverage combine && coverage report -m
   - flake8
 
 comment: false
