@@ -5,7 +5,6 @@ help:
 	@echo "clean-pyc - remove Python file artifacts"
 	@echo "lint - check style with flake8"
 	@echo "test - run tests on every Python version with tox"
-	@echo "docs - generate Sphinx HTML documentation, including API docs"
 	@echo "release - package and upload a release"
 	@echo "sdist - package"
 
@@ -22,20 +21,15 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 lint:
-	flake8 holonet tests
+	flake8 holonet_django tests
 
 test:
 	tox
 	@coverage combine
 	coverage report
-
-docs:
-	rm -f docs/django-holonet.rst
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ holonet
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
-	open docs/_build/html/index.html
+	coverage html
+	flake8
+	isort -c -rf holonet_django
 
 release: clean
 	python setup.py sdist upload

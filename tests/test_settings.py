@@ -3,7 +3,7 @@
 
 import unittest
 
-from holonet.settings import CLIENT_ID
+from holonet_django.settings import CLIENT_ID
 
 
 class TestHolonetSettings(unittest.TestCase):

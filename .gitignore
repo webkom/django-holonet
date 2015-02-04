@@ -43,3 +43,6 @@ docs/_build
 
 .idea/
 venv/*
+
+htmlcov/
+coverage.xml

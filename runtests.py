@@ -16,7 +16,7 @@ try:
             "django.contrib.auth",
             "django.contrib.contenttypes",
             "django.contrib.sites",
-            "holonet",
+            "holonet_django",
         ],
         SITE_ID=1,
         NOSE_ARGS=['-s'],
