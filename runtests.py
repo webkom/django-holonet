@@ -1,41 +1,37 @@
 import sys
 
+from django.conf import settings
+
+settings.configure(
+    DEBUG=True,
+    USE_TZ=True,
+    DATABASES={
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+        }
+    },
+    ROOT_URLCONF="holonet.urls",
+    INSTALLED_APPS=[
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.sites",
+        "holonet_django",
+        "tests",
+    ],
+    MIDDLEWARE_CLASSES=[],
+    SITE_ID=1,
+    NOSE_ARGS=['-s'],
+
+    HOLONET_RECIPIENT_MODEL='tests.TestRecipientModel'
+)
+
 try:
-    from django.conf import settings
-
-    settings.configure(
-        DEBUG=True,
-        USE_TZ=True,
-        DATABASES={
-            "default": {
-                "ENGINE": "django.db.backends.sqlite3",
-            }
-        },
-        ROOT_URLCONF="holonet.urls",
-        INSTALLED_APPS=[
-            "django.contrib.auth",
-            "django.contrib.contenttypes",
-            "django.contrib.sites",
-            "holonet_django",
-        ],
-        MIDDLEWARE_CLASSES=[],
-        SITE_ID=1,
-        NOSE_ARGS=['-s'],
-    )
-
-    try:
-        import django
-        setup = django.setup
-    except AttributeError:
-        pass
-    else:
-        setup()
-
-    from django_nose import NoseTestSuiteRunner
-except ImportError:
-    import traceback
-    traceback.print_exc()
-    raise ImportError("To fix this error, run: pip install -r requirements-test.txt")
+    import django
+    setup = django.setup
+except AttributeError:
+    pass
+else:
+    setup()
 
 
 def run_tests(*test_args):
@@ -43,7 +39,8 @@ def run_tests(*test_args):
         test_args = ['tests']
 
     # Run tests
-    test_runner = NoseTestSuiteRunner(verbosity=1)
+    from django.test.runner import DiscoverRunner
+    test_runner = DiscoverRunner()
 
     failures = test_runner.run_tests(test_args)
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import unittest
+from django.test import TestCase
 
 
-class TestHolonetModels(unittest.TestCase):
+class TestHolonetModels(TestCase):
     pass

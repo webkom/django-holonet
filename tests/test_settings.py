@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import unittest
-
+from django.test import TestCase
 from django.test.utils import override_settings
 
 from holonet_django.settings import holonet_settings
 
 
-class TestHolonetSettings(unittest.TestCase):
+class TestHolonetSettings(TestCase):
 
     def test_item_getter_no_setting(self):
         try:
