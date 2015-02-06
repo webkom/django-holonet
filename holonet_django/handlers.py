@@ -12,3 +12,7 @@ def handle_recipient_change(recipient):
                            holonet_settings.RECIPIENT_UNIQUE_IDENTIFIER_FIELD)
 
     return id, email
+
+
+def handle_mapping_change(mapping):
+    return False

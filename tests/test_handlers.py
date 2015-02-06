@@ -2,7 +2,7 @@
 
 from django.test import TestCase
 
-from holonet_django.handlers import handle_recipient_change
+from holonet_django.handlers import handle_mapping_change, handle_recipient_change
 from tests.models import TestRecipientModel
 
 
@@ -19,3 +19,6 @@ class HandlersTestCase(TestCase):
 
         test_object.email = 'test@holonet.no'
         self.assertEquals(handle_recipient_change(test_object), (test_object.pk, test_object.email))
+
+    def test_mapping_handler(self):
+        self.assertFalse(handle_mapping_change(None))

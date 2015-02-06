@@ -15,7 +15,8 @@ class Settings(object):
         'TESTING': 'test' in sys.argv,
         'RECIPIENT_MODEL': settings.AUTH_USER_MODEL,
         'RECIPIENT_UNIQUE_IDENTIFIER_FIELD': 'pk',
-        'RECIPIENT_EMAIL_FIELD': 'email'
+        'RECIPIENT_EMAIL_FIELD': 'email',
+        'MAPPING_MODELS': {}
     }
 
     def __getattr__(self, item):

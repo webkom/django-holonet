@@ -22,7 +22,11 @@ settings.configure(
     SITE_ID=1,
     NOSE_ARGS=['-s'],
 
-    HOLONET_RECIPIENT_MODEL='tests.TestRecipientModel'
+    HOLONET_RECIPIENT_MODEL='tests.TestRecipientModel',
+    HOLONET_MAPPING_MODELS={
+        'tests.Mapping1': {},
+        'tests.Mapping2': {}
+    }
 )
 
 try:
