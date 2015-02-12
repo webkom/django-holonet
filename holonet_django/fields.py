@@ -2,11 +2,15 @@
 
 from django.db.models import SlugField
 
+from . import validators
+
 
 class MailPrefixField(SlugField):
 
     def __init__(self, *args, **kwargs):
-        if 'max_length' in kwargs:
-            del kwargs['max_length']
-        super(MailPrefixField, self).__init__(max_length=100, blank=False, null=False, *args,
-                                              **kwargs)
+        kwargs['max_length'] = 100
+        kwargs['blank'] = False
+        kwargs['null'] = False
+        kwargs['unique'] = True
+        kwargs['validators'] = [validators.validate_prefix]
+        super(MailPrefixField, self).__init__(*args, **kwargs)

@@ -2,6 +2,7 @@
 
 from abc import abstractmethod
 
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 
 from . import handlers
@@ -30,6 +31,11 @@ class MailMapping(models.Model):
         """
         if self.pk:
             handlers.handle_mapping_change(self, created=False, updated_fields=None, force=True)
+
+    def get_mapping_id(self):
+        if not self.pk:
+            raise ValueError('The model needs to have a pk before you can get the id.')
+        return '%s.%s' % (ContentType.objects.get_for_model(self), self.pk)
 
     class Meta:
         abstract = True

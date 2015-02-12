@@ -12,7 +12,7 @@ class HandlersTestCase(TestCase):
     def test_recipient_handler(self):
         self.assertRaises(RuntimeError, handle_recipient_change, None, False, None)
 
-        test_object = TestRecipientModel()
+        test_object = TestRecipientModel(email='test@holonet.no')
         self.assertRaises(RuntimeError, handle_recipient_change, test_object, False, None)  # No pk
 
         test_object.save()
@@ -28,7 +28,7 @@ class HandlersTestCase(TestCase):
 
     def test_recipient_delete(self):
 
-        test_object = TestRecipientModel()
+        test_object = TestRecipientModel(email='test@holonet.no')
         self.assertRaises(RuntimeError, handle_recipient_delete, test_object)
 
         test_object.save()
