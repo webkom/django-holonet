@@ -16,7 +16,8 @@ class Settings(object):
         'RECIPIENT_MODEL': settings.AUTH_USER_MODEL,
         'RECIPIENT_UNIQUE_IDENTIFIER_FIELD': 'pk',
         'RECIPIENT_EMAIL_FIELD': 'email',
-        'MAPPING_MODELS': {}
+        'MAPPING_MODELS': {
+        }
     }
 
     def __getattr__(self, item):

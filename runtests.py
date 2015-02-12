@@ -24,7 +24,9 @@ settings.configure(
 
     HOLONET_RECIPIENT_MODEL='tests.TestRecipientModel',
     HOLONET_MAPPING_MODELS={
-        'tests.Mapping1': {},
+        'tests.Mapping1': {
+            'recipient_relations': ['recipients']
+        },
         'tests.Mapping2': {}
     }
 )
