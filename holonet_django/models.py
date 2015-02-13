@@ -13,6 +13,9 @@ class MailMapping(models.Model):
 
     mail_prefix = MailPrefixField()
 
+    class Meta:
+        abstract = True
+
     @abstractmethod
     def get_recipients(self):
         """
@@ -36,6 +39,3 @@ class MailMapping(models.Model):
         if not self.pk:
             raise ValueError('The model needs to have a pk before you can get the id.')
         return '%s.%s' % (ContentType.objects.get_for_model(self), self.pk)
-
-    class Meta:
-        abstract = True

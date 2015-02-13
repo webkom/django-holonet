@@ -1,6 +1,7 @@
 # -*- coding: utf8 -*-
 
-from holonet_django.settings import holonet_settings
+from .exceptions import HolonetConfigrationError
+from .settings import holonet_settings
 
 
 def handle_recipient_change(recipient, created, updated_fields):
@@ -8,8 +9,8 @@ def handle_recipient_change(recipient, created, updated_fields):
     email = getattr(recipient, holonet_settings.RECIPIENT_EMAIL_FIELD, None)
 
     if id is None:
-        raise RuntimeError('Holonet could not find the unique field %s.' %
-                           holonet_settings.RECIPIENT_UNIQUE_IDENTIFIER_FIELD)
+        raise HolonetConfigrationError('Holonet could not find the unique field %s.' %
+                                       holonet_settings.RECIPIENT_UNIQUE_IDENTIFIER_FIELD)
 
     return id, email
 
@@ -19,13 +20,13 @@ def handle_mapping_change(mapping, created, updated_fields, force=False):
 
 
 def handle_recipient_delete(recipient):
-    id = getattr(recipient, holonet_settings.RECIPIENT_UNIQUE_IDENTIFIER_FIELD, None)
+    identifier_field = getattr(recipient, holonet_settings.RECIPIENT_UNIQUE_IDENTIFIER_FIELD, None)
 
-    if id is None:
-        raise RuntimeError('Holonet could not find the unique field %s.' %
-                           holonet_settings.RECIPIENT_UNIQUE_IDENTIFIER_FIELD)
+    if identifier_field is None:
+        raise HolonetConfigrationError('Holonet could not find the unique field %s.' %
+                                       holonet_settings.RECIPIENT_UNIQUE_IDENTIFIER_FIELD)
 
-    return id
+    return identifier_field
 
 
 def handle_mapping_delete(mapping):

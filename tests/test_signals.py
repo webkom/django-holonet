@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.core.exceptions import ImproperlyConfigured
 from django.test import TestCase
 from django.test.utils import override_settings
 from mock import Mock
 
 from holonet_django import handlers, validators
+from holonet_django.exceptions import HolonetConfigrationError
 from holonet_django.signals import (add_signal_listeners, pre_save_mapping_check,
                                     pre_save_recipient_check)
 from tests.models import Mapping1, Mapping2, TestRecipientModel
@@ -70,7 +70,7 @@ class SignalsTestCase(TestCase):
     })
     def test_mapping_init_no_list(self):
         self.assertRaisesMessage(
-            ImproperlyConfigured,
+            HolonetConfigrationError,
             'recipient_relations needs to be a list of strings.',
             add_signal_listeners
         )
@@ -82,7 +82,7 @@ class SignalsTestCase(TestCase):
     })
     def test_mapping_init_no_string_list(self):
         self.assertRaisesMessage(
-            ImproperlyConfigured,
+            HolonetConfigrationError,
             'Each item in recipient_relations need to be a string.',
             add_signal_listeners
         )
@@ -94,7 +94,7 @@ class SignalsTestCase(TestCase):
     })
     def test_mapping_init_list_not_field(self):
         self.assertRaisesMessage(
-            ImproperlyConfigured,
+            HolonetConfigrationError,
             'Could not find the relation_field on the model.',
             add_signal_listeners
         )
@@ -106,7 +106,7 @@ class SignalsTestCase(TestCase):
     })
     def test_mapping_init_no_list_invalid_field(self):
         self.assertRaisesMessage(
-            ImproperlyConfigured,
+            HolonetConfigrationError,
             'The relation field needs to be of type models.ManyToManyField',
             add_signal_listeners
         )

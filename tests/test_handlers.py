@@ -2,6 +2,7 @@
 
 from django.test import TestCase
 
+from holonet_django.exceptions import HolonetConfigrationError
 from holonet_django.handlers import (handle_mapping_change, handle_mapping_delete,
                                      handle_recipient_change, handle_recipient_delete)
 from tests.models import TestRecipientModel
@@ -10,10 +11,11 @@ from tests.models import TestRecipientModel
 class HandlersTestCase(TestCase):
 
     def test_recipient_handler(self):
-        self.assertRaises(RuntimeError, handle_recipient_change, None, False, None)
+        self.assertRaises(HolonetConfigrationError, handle_recipient_change, None, False, None)
 
         test_object = TestRecipientModel(email='test@holonet.no')
-        self.assertRaises(RuntimeError, handle_recipient_change, test_object, False, None)  # No pk
+        self.assertRaises(HolonetConfigrationError, handle_recipient_change, test_object, False,
+                          None)  # No pk
 
         test_object.save()
         self.assertEquals(handle_recipient_change(test_object, True, None), (test_object.pk,
@@ -29,7 +31,7 @@ class HandlersTestCase(TestCase):
     def test_recipient_delete(self):
 
         test_object = TestRecipientModel(email='test@holonet.no')
-        self.assertRaises(RuntimeError, handle_recipient_delete, test_object)
+        self.assertRaises(HolonetConfigrationError, handle_recipient_delete, test_object)
 
         test_object.save()
         self.assertEqual(handle_recipient_delete(test_object), test_object.pk)

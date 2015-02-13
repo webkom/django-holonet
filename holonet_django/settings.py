@@ -4,6 +4,8 @@ import sys
 
 from django.conf import settings
 
+from .exceptions import HolonetConfigrationError
+
 
 class Settings(object):
 
@@ -30,6 +32,6 @@ class Settings(object):
         if default_value is not None:
             return default_value
 
-        raise AttributeError('Please set HOLONET_%s in your project settings.' % item)
+        raise HolonetConfigrationError('Please set HOLONET_%s in your project settings.' % item)
 
 holonet_settings = Settings()
