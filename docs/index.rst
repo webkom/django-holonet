@@ -13,6 +13,16 @@ Install it with pip: ::
 
 .. include:: settings.rst
 
+Contents
+--------
+
+.. toctree::
+   :maxdepth: 2
+
+   installation
+   settings
+   API reference </apidocs/modules>
+
 .. |frigg| image:: https://ci.frigg.io/badges/webkom/django-holonet/
     :target: https://ci.frigg.io/webkom/django-holonet/last/
 

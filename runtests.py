@@ -1,43 +1,12 @@
 import sys
+import os
 
-from django.conf import settings
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
-settings.configure(
-    DEBUG=True,
-    USE_TZ=True,
-    DATABASES={
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-        }
-    },
-    ROOT_URLCONF="holonet.urls",
-    INSTALLED_APPS=[
-        "django.contrib.auth",
-        "django.contrib.contenttypes",
-        "django.contrib.sites",
-        "holonet_django",
-        "tests",
-    ],
-    MIDDLEWARE_CLASSES=[],
-    SITE_ID=1,
-    NOSE_ARGS=['-s'],
+import django
 
-    HOLONET_RECIPIENT_MODEL='tests.TestRecipientModel',
-    HOLONET_MAPPING_MODELS={
-        'tests.Mapping1': {
-            'recipient_relations': ['recipients']
-        },
-        'tests.Mapping2': {}
-    }
-)
-
-try:
-    import django
-    setup = django.setup
-except AttributeError:
-    pass
-else:
-    setup()
+if django.VERSION >= (1, 7):
+    django.setup()
 
 
 def run_tests(*test_args):
