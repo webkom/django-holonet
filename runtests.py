@@ -1,9 +1,10 @@
-import sys
 import os
+import sys
+
+import django
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
-import django
 
 if django.VERSION >= (1, 7):
     django.setup()
