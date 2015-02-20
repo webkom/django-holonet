@@ -1,5 +1,5 @@
-django-holonet |frigg| |coverage| |version| |python|
-====================================================
+django-holonet |frigg| |coverage| |version| |python| |docs|
+===========================================================
 
 Django package used to interact with holonet.
 

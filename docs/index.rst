@@ -37,7 +37,3 @@ Contents
 .. |python| image:: https://pypip.in/py_versions/django-holonet/badge.png?style=flat
     :target: https://pypi.python.org/pypi/django-holonet/
     :alt: Supported Python versions
-
-.. |docs| image:: https://readthedocs.org/projects/django-holonet/badge/?version=latest
-    :target: http://django-holonet.readthedocs.org/
-    :alt: Documentation Status
