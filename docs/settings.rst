@@ -4,6 +4,7 @@ Settings
 .. currentmodule:: django.conf.settings
 
 .. attribute:: HOLONET_RECIPIENT_MODEL
+    :noindex:
 
     **Default:** `settings.AUTH_USER_MODEL`
 
@@ -11,6 +12,7 @@ Settings
     updated in Holonet.
 
 .. attribute:: HOLONET_RECIPIENT_UNIQUE_IDENTIFIER_FIELD
+    :noindex:
 
     **Default:** `'pk'`
 
@@ -18,6 +20,7 @@ Settings
     the field in the model that is unique for all elements. the default is 'pk'
 
 .. attribute:: HOLONET_RECIPIENT_EMAIL_FIELD
+    :noindex:
 
     **Default:** `'email'`
 
@@ -25,6 +28,7 @@ Settings
     the model.
 
 .. attribute:: HOLONET_MAPPING_MODELS
+    :noindex:
 
     **Default:** `{}`
 
@@ -41,7 +45,9 @@ Settings
       RECIPIENT_MODEL class.
 
     Example:
-    ::
+
+    .. code-block:: python
+
         HOLONET_MAPPING_MODELS = {
             'tests.Mapping1': {
                 'recipient_relations': ['recipients']
