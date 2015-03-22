@@ -30,10 +30,10 @@ Contents
     :target: https://ci.frigg.io/webkom/django-holonet/last/
     :alt: Coverage
 
-.. |version| image:: https://pypip.in/version/django-holonet/badge.png?style=flat
+.. |version| image:: https://pypip.in/version/django-holonet/badge.svg?style=flat
     :target: https://pypi.python.org/pypi/django-holonet/
     :alt: Latest Version
 
-.. |python| image:: https://pypip.in/py_versions/django-holonet/badge.png?style=flat
+.. |python| image:: https://pypip.in/py_versions/django-holonet/badge.svg?style=flat
     :target: https://pypi.python.org/pypi/django-holonet/
     :alt: Supported Python versions
