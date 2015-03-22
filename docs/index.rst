@@ -1,5 +1,5 @@
-django-holonet |frigg| |coverage| |version| |python|
-====================================================
+django-holonet |frigg| |coverage| |version| |python| |deps|
+===========================================================
 
 Django package used to interact with holonet.
 
@@ -37,3 +37,7 @@ Contents
 .. |python| image:: https://pypip.in/py_versions/django-holonet/badge.svg?style=flat
     :target: https://pypi.python.org/pypi/django-holonet/
     :alt: Supported Python versions
+
+.. |deps| image:: https://requires.io/github/webkom/django-holonet/requirements.svg?branch=master
+     :target: https://requires.io/github/webkom/django-holonet/requirements/?branch=master
+     :alt: Requirements Status

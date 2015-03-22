@@ -1,6 +1,6 @@
 django-holonet
 ==============
-|frigg| |coverage| |version| |python| |docs|
+|frigg| |coverage| |version| |python| |docs| |deps|
 
 
 Django package used to interact with holonet.
@@ -41,5 +41,9 @@ MIT © Abakus Webkom
 .. |docs| image:: https://readthedocs.org/projects/django-holonet/badge/?version=latest
     :target: http://django-holonet.readthedocs.org/
     :alt: Documentation Status
+
+.. |deps| image:: https://requires.io/github/webkom/django-holonet/requirements.svg?branch=master
+     :target: https://requires.io/github/webkom/django-holonet/requirements/?branch=master
+     :alt: Requirements Status
 
 .. _Full documentation available on ReadTheDocs: http://django-holonet.readthedocs.org/
