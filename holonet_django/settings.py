@@ -10,10 +10,8 @@ from .exceptions import HolonetConfigrationError
 class Settings(object):
 
     CONFIGS = {
-        'API_ENDPIONTS': {
-            'sender_blacklist': '/sender-blacklist/',
-            'domain_blacklist': '/domain-blacklist/',
-        },
+        'API_HOST': None,
+        'API_KEY': None,
         'TESTING': 'test' in sys.argv,
         'RECIPIENT_MODEL': settings.AUTH_USER_MODEL,
         'RECIPIENT_UNIQUE_IDENTIFIER_FIELD': 'pk',

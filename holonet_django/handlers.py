@@ -1,22 +1,23 @@
 # -*- coding: utf8 -*-
 
+from . import api
 from .exceptions import HolonetConfigrationError
 from .settings import holonet_settings
 
 
 def handle_recipient_change(recipient, created, updated_fields):
-    id = getattr(recipient, holonet_settings.RECIPIENT_UNIQUE_IDENTIFIER_FIELD, None)
+    identifier_field = getattr(recipient, holonet_settings.RECIPIENT_UNIQUE_IDENTIFIER_FIELD, None)
     email = getattr(recipient, holonet_settings.RECIPIENT_EMAIL_FIELD, None)
 
-    if id is None:
+    if identifier_field is None:
         raise HolonetConfigrationError('Holonet could not find the unique field %s.' %
                                        holonet_settings.RECIPIENT_UNIQUE_IDENTIFIER_FIELD)
 
-    return id, email
+    api.change_recipient(identifier_field, email)
 
 
 def handle_mapping_change(mapping, created, updated_fields, force=False):
-    return False
+    api.change_mapping(mapping, created)
 
 
 def handle_recipient_delete(recipient):
@@ -26,8 +27,8 @@ def handle_recipient_delete(recipient):
         raise HolonetConfigrationError('Holonet could not find the unique field %s.' %
                                        holonet_settings.RECIPIENT_UNIQUE_IDENTIFIER_FIELD)
 
-    return identifier_field
+    api.delete_recipient(identifier_field)
 
 
 def handle_mapping_delete(mapping):
-    return mapping
+    api.delete_mapping(mapping)

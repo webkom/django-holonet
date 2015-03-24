@@ -27,3 +27,6 @@ HOLONET_MAPPING_MODELS = {
     },
     'tests.Mapping2': {}
 }
+
+HOLONET_API_HOST = 'http://127.0.0.1:8000/api'
+HOLONET_API_KEY = 'testing'
