@@ -1,53 +1,54 @@
 # -*- coding: utf8 -*-
+from unittest import mock
 
 from django.test import TestCase
-from mock import Mock
 
-from holonet_django import api, handlers
+from holonet_django import handlers
 from holonet_django.exceptions import HolonetConfigrationError
 from tests.models import Mapping1, TestRecipientModel
 
 
 class HandlersTestCase(TestCase):
 
-    def test_recipient_handler(self):
+    @mock.patch('holonet_django.api.change_recipient')
+    def test_recipient_handler(self, mock_change_recipient):
 
-        self.assertRaises(HolonetConfigrationError, handlers.handle_recipient_change, None, False,
-                          None)
+        with self.assertRaises(HolonetConfigrationError):
+            handlers.handle_recipient_change(None, False, None)
 
         test_object = TestRecipientModel(email='test@holonet.no')
-        self.assertRaises(HolonetConfigrationError, handlers.handle_recipient_change, test_object,
-                          False, None)  # No pk
+        with self.assertRaises(HolonetConfigrationError):
+            handlers.handle_recipient_change(test_object, False, None)  # No pk
 
-        api.change_recipient = Mock()
         test_object.save()
-        api.change_recipient.assert_called_once_with(test_object.pk, test_object.email)
 
-        api.change_recipient = Mock()
-        test_object.email = 'test@holonet.no'
+        test_object.email = 'test2@holonet.no'
         handlers.handle_recipient_change(test_object, True, None)
-        api.change_recipient.assert_called_once_with(test_object.pk, test_object.email)
+        mock_change_recipient.assert_has_calls([
+            mock.call(1, 'test@holonet.no'),
+            mock.call(1, 'test2@holonet.no'),
+        ])
 
-    def test_mapping_handler(self):
-        self.assertFalse(handlers.handle_mapping_change(None, False, None))
-
-    def test_recipient_delete(self):
+    @mock.patch('holonet_django.api.delete_recipient')
+    @mock.patch('holonet_django.api.change_recipient')
+    def test_recipient_delete(self, mock_change_recipient, mock_delete_recipient):
 
         test_object = TestRecipientModel(email='test@holonet.no')
         self.assertRaises(HolonetConfigrationError, handlers.handle_recipient_delete, test_object)
 
-        api.change_recipient = Mock()
-        api.delete_recipient = Mock()
         test_object.save()
-        api.change_recipient.assert_called_once_with(test_object.pk, test_object.email)
+        mock_change_recipient.assert_called_once_with(test_object.pk, test_object.email)
         old_pk = test_object.pk
         test_object.delete()
-        api.delete_recipient.assert_called_once_with(old_pk)
+        mock_delete_recipient.assert_called_once_with(old_pk)
 
-    def test_mapping_delete(self):
+    @mock.patch('holonet_django.api.delete_mapping')
+    def test_mapping_delete(self, mock_delete_mapping):
         mapping = Mapping1()
-
-        api.delete_mapping = Mock()
         handlers.handle_mapping_delete(mapping)
+        mock_delete_mapping.assert_called_once_with(mapping)
 
-        api.delete_mapping.assert_called_once_with(mapping)
+    @mock.patch('holonet_django.api.change_mapping')
+    def test_mapping_change(self):
+        self.assertFalse(handlers.handle_mapping_change(None, False, None))
+
