@@ -4,25 +4,35 @@ import sys
 
 from django.conf import settings
 
-from .exceptions import HolonetConfigrationError
+from .exceptions import HolonetConfigurationError
 
 
 class Settings(object):
 
     CONFIGS = {
-        'API_HOST': None,
-        'API_KEY': None,
         'TESTING': 'test' in sys.argv,
-        'RECIPIENT_MODEL': settings.AUTH_USER_MODEL,
-        'RECIPIENT_UNIQUE_IDENTIFIER_FIELD': 'pk',
-        'RECIPIENT_EMAIL_FIELD': 'email',
-        'HOLONET_API_URL': 'https://holonet.abakus.no/api',
-        'MAPPING_MODELS': {
-        }
+        'API_CLIENT_ID': None,
+        'API_CLIENT_SECRET': None,
+        'API_URL': None,
     }
 
+    def __init__(self):
+        """
+        This function does a config test.
+        :raises: ´holonet_django.exceptions.HolonetConfigurationError´
+        :return: None
+        """
+
+        for key, value in self.CONFIGS.items():
+            getattr(self, key)
+
     def __getattr__(self, item):
-        default_value = self.CONFIGS.get(item, None)
+        if item not in self.CONFIGS.keys():
+            raise HolonetConfigurationError('%s is not a valid django-holonet setting. This is '
+                                            'probably a problem with the django-holonet module '
+                                            'itself.' % (item, ))
+
+        default_value = self.CONFIGS.get(item)
         settings_value = getattr(settings, 'HOLONET_%s' % item, None)
 
         if settings_value is not None:
@@ -31,6 +41,6 @@ class Settings(object):
         if default_value is not None:
             return default_value
 
-        raise HolonetConfigrationError('Please set HOLONET_%s in your project settings.' % item)
+        raise HolonetConfigurationError('Please set HOLONET_%s in your project settings.' % item)
 
 holonet_settings = Settings()

@@ -19,6 +19,5 @@ exclude_lines =
 
 omit =
     holonet_django/*/migrations/*
-    holonet_django/settings.py
 
 show_missing = True

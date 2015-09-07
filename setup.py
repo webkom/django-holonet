@@ -22,7 +22,8 @@ setup(
     packages=find_packages(exclude='tests'),
     include_package_data=True,
     install_requires=[
-        'requests'
+        'requests==2.5.3',
+        'requests-oauthlib==0.5.0',
     ],
     license="MIT",
     zip_safe=False,

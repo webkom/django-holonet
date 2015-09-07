@@ -3,6 +3,7 @@ import sys
 
 import django
 
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
 

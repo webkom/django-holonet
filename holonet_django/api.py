@@ -1,43 +1,61 @@
 # -*- coding: utf8 -*-
-import requests
+import json
 
-from .exceptions import HolonetInvalidAPIKey
+from oauthlib.oauth2 import BackendApplicationClient, TokenExpiredError
+from requests.exceptions import RequestException
+from requests_oauthlib import OAuth2Session
+
+from .constants import API_TOKEN_ENDPOINT
+from .exceptions import HolonetAuthenticationFailiure, HolonetRequestFailiure
 from .settings import holonet_settings
+from .utils import create_url
 
 
-def api_key():
-    if holonet_settings.API_KEY is None or not isinstance(holonet_settings.API_KEY, str):
-        raise HolonetInvalidAPIKey()
-    return holonet_settings.API_KEY
+class APIClient(object):
 
+    oauth_client = BackendApplicationClient(client_id=holonet_settings.API_CLIENT_ID)
+    holonet_client = None
 
-def api_request(path, data=None, delete=False):
-    url = '{}/{}'.format(holonet_settings.HOLONET_API_URL, path)
-    if data is None:
-        return requests.get(url)
-    elif delete:
-        return requests.delete(url)
-    else:
-        return requests.post(url, data)
+    def _fetch_client(self):
+        if self.holonet_client is None:
+            self.holonet_client = OAuth2Session(client=self.oauth_client)
+            self._refresh_token()
 
+        return self.holonet_client
 
-def change_recipient(tag, address):
-    return api_request('recipients/{}/'.format(tag), data={
-        'tag': tag,
-        'address': address
-    })
+    def _refresh_token(self):
+        if self.holonet_client is None:
+            self._fetch_client()
 
+        try:
+            self.holonet_client.fetch_token(token_url=create_url(API_TOKEN_ENDPOINT),
+                                            client_id=holonet_settings.API_CLIENT_ID,
+                                            client_secret=holonet_settings.API_CLIENT_SECRET)
+        except RequestException:
+            raise HolonetAuthenticationFailiure('Could not retrieve access token. Please '
+                                                'check the API_TOKEN_ENDPOINT, API_CLIENT_ID '
+                                                'and API_CLIENT_SECRET settings.')
 
-def delete_recipient(tag):
-    return api_request('recipients/{}/'.format(tag), delete=True)
+    def _do_request(self, name, url, **kwargs):
+        def request():
+            f = getattr(self._fetch_client(), name)
+            response = f(create_url(url), **kwargs)
+            if 200 <= response.status_code < 300:
+                return json.loads(response.text)
+            else:
+                raise HolonetRequestFailiure(response)
 
+        try:
+            return request()
+        except TokenExpiredError:
+            self._refresh_token()
+            return request()
 
-def change_mapping(mapping, created):
-    return api_request('mappings/{}/'.format(mapping.mail_prefix), data={
-        'mail_prefix': mapping.mail_prefix,
-        'recipients': mapping.get_reciptients()
-    })
+    def get(self, url, **kwargs):
+        return self._do_request('get', url, **kwargs)
 
+    def post(self, url, data, **kwargs):
+        kwargs['data'] = data
+        return self._do_request('post', url, **kwargs)
 
-def delete_mapping(mapping):
-    return api_request('mappings/{}/'.format(mapping.mail_prefix), delete=True)
+client = APIClient()
