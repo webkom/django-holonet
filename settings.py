@@ -2,7 +2,7 @@
 
 DEBUG = True
 USE_TZ = True
-SECRET_KEY = 'justtesting'
+SECRET_KEY = 'just_testing'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -20,13 +20,6 @@ MIDDLEWARE_CLASSES = []
 SITE_ID = 1
 NOSE_ARGS = ['-s']
 
-HOLONET_RECIPIENT_MODEL = 'tests.TestRecipientModel'
-HOLONET_MAPPING_MODELS = {
-    'tests.Mapping1': {
-        'recipient_relations': ['recipients']
-    },
-    'tests.Mapping2': {}
-}
-
-HOLONET_API_HOST = 'http://127.0.0.1:8000/api'
-HOLONET_API_KEY = 'testing'
+HOLONET_API_CLIENT_ID = 'test_client_id'
+HOLONET_API_CLIENT_SECRET = 'test_client_secret'
+HOLONET_API_URL = 'http://127.0.0.1:8000/'

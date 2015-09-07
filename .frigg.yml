@@ -1,15 +1,18 @@
 tasks:
-  - tox -e py27-django16
   - tox -e py27-django17
-  - tox -e py34-django16
   - tox -e py34-django17
+  - tox -e py27-django18
+  - tox -e py34-django18
   - tox -e docs
-  - flake8
-  - isort -c -rc holonet_django tests
+  - tox -e flake8
+  - tox -e isort
   - coverage combine && coverage report -m --fail-under=75
   - coverage xml
 
 comment: false
+
+verbose_tasks:
+  - coverage combine && coverage report -m --fail-under=75
 
 coverage:
   path: coverage.xml

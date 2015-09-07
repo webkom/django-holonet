@@ -3,6 +3,3 @@ coverage
 mock
 nose
 django-nose
-flake8
-tox
-

@@ -7,4 +7,4 @@ class HolonetDjangoConfig(AppConfig):
     name = 'holonet_django'
 
     def ready(self):
-        import holonet_django.signals
+        import holonet_django.signals  # noqa
