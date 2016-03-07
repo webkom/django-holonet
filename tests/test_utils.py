@@ -12,4 +12,4 @@ class UtilsTestCase(TestCase):
         method = '/detail'
 
         self.assertEqual(utils.create_url(namespace, endpoint, method),
-                         'http://127.0.0.1/test/endpoint/detail/')
+                         'http://127.0.0.1/api/test/endpoint/detail/')

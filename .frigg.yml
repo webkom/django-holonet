@@ -3,16 +3,17 @@ tasks:
   - tox -e py34-django17
   - tox -e py27-django18
   - tox -e py34-django18
+  - tox -e py27-django19
+  - tox -e py34-django19
   - tox -e docs
   - tox -e flake8
   - tox -e isort
-  - coverage combine && coverage report -m --fail-under=75
-  - coverage xml
+  - tox -e coverage
 
 comment: false
 
 verbose_tasks:
-  - coverage combine && coverage report -m --fail-under=75
+  - tox -e coverage
 
 coverage:
   path: coverage.xml

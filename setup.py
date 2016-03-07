@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 try:
     from setuptools import setup, find_packages
@@ -22,8 +22,9 @@ setup(
     packages=find_packages(exclude='tests'),
     include_package_data=True,
     install_requires=[
-        'requests==2.5.3',
-        'requests-oauthlib==0.5.0',
+        'six==1.10.0',
+        'requests==2.9.1',
+        'requests-oauthlib==0.6.1',
     ],
     license="MIT",
     zip_safe=False,

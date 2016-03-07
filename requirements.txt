@@ -1,3 +1,0 @@
-wheel
-requests==2.5.3
-requests-oauthlib==0.5.0

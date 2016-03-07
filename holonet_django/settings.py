@@ -14,6 +14,12 @@ class Settings(object):
         'API_CLIENT_ID': None,
         'API_CLIENT_SECRET': None,
         'API_URL': None,
+
+        'DEFAULT_DOMAINS': None,
+        'RECIPIENT_MODEL': settings.AUTH_USER_MODEL,
+        'RECIPIENT_UNIQUE_IDENTIFIER_FIELD': 'pk',
+        'RECIPIENT_EMAIL_FIELD': 'email',
+        'MAPPING_MODELS': {}
     }
 
     def __init__(self):

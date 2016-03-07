@@ -5,7 +5,7 @@ from oauthlib.oauth2 import BackendApplicationClient, TokenExpiredError
 from requests.exceptions import RequestException
 from requests_oauthlib import OAuth2Session
 
-from .constants import API_TOKEN_ENDPOINT
+from .constants import API_OAUTH_TOKEN
 from .exceptions import HolonetAuthenticationFailiure, HolonetRequestFailiure
 from .settings import holonet_settings
 from .utils import create_url
@@ -28,13 +28,14 @@ class APIClient(object):
             self._fetch_client()
 
         try:
-            self.holonet_client.fetch_token(token_url=create_url(API_TOKEN_ENDPOINT),
+            self.holonet_client.fetch_token(token_url=create_url(API_OAUTH_TOKEN, api_path=False),
                                             client_id=holonet_settings.API_CLIENT_ID,
                                             client_secret=holonet_settings.API_CLIENT_SECRET)
-        except RequestException:
+        except RequestException as ex:
+            print(ex)
             raise HolonetAuthenticationFailiure('Could not retrieve access token. Please '
-                                                'check the API_TOKEN_ENDPOINT, API_CLIENT_ID '
-                                                'and API_CLIENT_SECRET settings.')
+                                                'check the API_CLIENT_ID and API_CLIENT_SECRET '
+                                                'settings.')
 
     def _do_request(self, name, url, **kwargs):
         def request():
